@@ -1,0 +1,32 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+
+  config.vm.define "assai-fornecedores-ionic2" do |app|
+    app.vm.box = "ubuntu/trusty32"
+    app.vm.hostname = "assai-fornecedores-ionic2"
+
+    app.vm.provision :shell, path: "bootstrap.sh"
+    app.vm.provision :shell, path: "init.sh", run: "always"
+
+    app.vm.network :private_network, ip: "10.11.12.13"
+    app.vm.network "forwarded_port", guest: 8101, host: 8101
+    app.vm.network "forwarded_port", guest: 35730, host: 35730
+
+    app.vm.synced_folder "../", "/project", create: true, :nfs => true, :mount_options => ['actimeo=2']
+
+    config.vm.provider "virtualbox" do |vb|
+     vb.name = "assai-fornecedores-ionic2"
+     vb.memory = 768
+     vb.customize ["modifyvm", :id, "--usb", "on"]
+     vb.customize ["usbfilter", "add", "0", "--target", :id, "--name", "android", "--vendorid", "0x18d1"]
+     vb.customize ["usbfilter", "add", "0", "--target", :id, "--name", "motorola", "--vendorid", "0x22b8"]
+     vb.customize ["usbfilter", "add", "0", "--target", :id, "--name", "motorolaD3", "--vendorid", "0x0bb4"]
+     vb.customize ["usbfilter", "add", "0", "--target", :id, "--name", "samsunguinho", "--vendorid", "0x04e8"]
+     vb.customize ["usbfilter", "add", "0", "--target", :id, "--name", "xaiomi", "--vendorid", "0x2717"]
+    end
+  end
+end
