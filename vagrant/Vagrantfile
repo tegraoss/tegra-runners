@@ -5,9 +5,9 @@ VAGRANTFILE_API_VERSION = "2"
 
 Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
-  config.vm.define "assai-fornecedores-ionic2" do |app|
+  config.vm.define "tegra-runners" do |app|
     app.vm.box = "ubuntu/trusty32"
-    app.vm.hostname = "assai-fornecedores-ionic2"
+    app.vm.hostname = "tegra-runners"
 
     app.vm.provision :shell, path: "bootstrap.sh"
     app.vm.provision :shell, path: "init.sh", run: "always"
@@ -19,7 +19,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     app.vm.synced_folder "../", "/project", create: true, :nfs => true, :mount_options => ['actimeo=2']
 
     config.vm.provider "virtualbox" do |vb|
-     vb.name = "assai-fornecedores-ionic2"
+     vb.name = "tegra-runners"
      vb.memory = 768
      vb.customize ["modifyvm", :id, "--usb", "on"]
      vb.customize ["usbfilter", "add", "0", "--target", :id, "--name", "android", "--vendorid", "0x18d1"]
