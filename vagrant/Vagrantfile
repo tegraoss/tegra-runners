@@ -13,8 +13,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
     app.vm.provision :shell, path: "init.sh", run: "always"
 
     app.vm.network :private_network, ip: "10.11.12.13"
-    app.vm.network "forwarded_port", guest: 8101, host: 8101
-    app.vm.network "forwarded_port", guest: 35730, host: 35730
+    app.vm.network "forwarded_port", guest: 8100, host: 8100
+    app.vm.network "forwarded_port", guest: 35729, host: 35729
 
     app.vm.synced_folder "../", "/project", create: true, :nfs => true, :mount_options => ['actimeo=2']
 
